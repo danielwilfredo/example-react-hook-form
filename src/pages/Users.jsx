@@ -4,10 +4,11 @@ import useManageImage from "../hooks/useImageChange";
 import InputText from "../components/InputText";
 import SelectInput from "../components/SelectInput";
 import Button from "../components/Button";
+import { optionSelect } from "../utils/apiUrl";
+import useDataUser from "../hooks/users/useDataUser";
 
 const Users = () => {
-  const { imagePreviews, handleImageChange, removeImageAtIndex } =
-    useManageImage();
+  const { register, handleSubmit, errors } = useDataUser();
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -17,60 +18,56 @@ const Users = () => {
       >
         Back To Dashboard
       </Link>
-      <form className="border-b border-gray-900/10 pb-12 bg-white shadow-md rounded-lg flex flex-col p-4 ">
+
+      <form
+        onSubmit={handleSubmit}
+        className="border-b border-gray-900/10 pb-12 bg-white shadow-md rounded-lg flex flex-col p-4"
+      >
         <Titulo titulo="User Information" />
 
-        <p className="mt-1 text-sm/6 text-gray-600">
-          Use a permanent address where you can receive mail.
-        </p>
-
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           {/* First Name */}
-
           <InputText
             type="text"
-            name="first-name"
+            name="nombre"
             label="First Name"
             placeholder="Enter your first name"
-            autoComplete="given-name"
-            value=""
-            onChange={() => {}}
+            register={register}
+            error={errors.nombre?.message}
           />
 
           {/* Last Name */}
           <InputText
             type="text"
-            name="last-name"
+            name="apellido"
             label="Last Name"
             placeholder="Enter your last name"
-            autoComplete="given-name"
-            value=""
-            onChange={() => {}}
+            register={register}
+            error={errors.apellido?.message}
           />
 
           {/* Email */}
           <InputText
             type="email"
-            name="email"
-            label="Email Adress"
+            name="correo"
+            label="Email Address"
             placeholder="Enter your email address"
-            value=""
-            onChange={() => {}}
+            register={register}
+            error={errors.correo?.message}
           />
 
           {/* Country */}
           <SelectInput
-            label="Country"
-            options={[
-              { value: "us", label: "United States" },
-              { value: "ca", label: "Canada" },
-              { value: "mx", label: "Mexico" },
-            ]}
-            value=""
-            onChange={() => {}}
+            label="Especiality"
+            name="especialidad"
+            options={optionSelect}
+            register={register}
+            error={errors.especialidad?.message}
           />
         </div>
-        <Button type="submit" text="Save User" onClick={null}/>
+        <div className="mt-6 flex justify-start ">
+          <Button type="submit" text="Save User" />
+        </div>
       </form>
     </div>
   );
