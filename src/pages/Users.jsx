@@ -1,20 +1,23 @@
 import { Link } from "react-router-dom";
 import Titulo from "../components/Titulos";
-import useManageImage from "../hooks/useImageChange";
 import InputText from "../components/InputText";
 import SelectInput from "../components/SelectInput";
 import Button from "../components/Button";
 import { optionSelect } from "../utils/apiUrl";
 import useDataUser from "../hooks/users/useDataUser";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Users = () => {
-  const { register, handleSubmit, errors } = useDataUser();
+  const { id } = useParams();
+  const methods = useForm();
+  const { register, handleSubmit, errors } = useDataUser(methods);
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Link
         to="/home"
-        className="text-2xl font-bold text-gray-900 mb-4 bg-green-100 p-2 rounded w-auto text-center hover:bg-green-200 transition-colors"
+        className="text-2xl font-bold text-gray-900 mb-4 bg-green-400 p-2 rounded w-auto text-center hover:bg-green-200 transition-colors"
       >
         Back To Dashboard
       </Link>
@@ -66,7 +69,7 @@ const Users = () => {
           />
         </div>
         <div className="mt-6 flex justify-start ">
-          <Button type="submit" text="Save User" />
+          <Button type="submit" text={id ? "Edit User" : "Save User"} />
         </div>
       </form>
     </div>
